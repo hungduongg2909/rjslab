@@ -8,6 +8,7 @@ import Menu from './MenuComponent';
 import Home from './HomeComponent';
 import Contact from './ContactComponent';
 import DishDetail from './DishdetailComponent';
+import About from './AboutComponent';
 import { COMMENTS } from '../shared/comments';
 import { PROMOTIONS } from '../shared/promotions';
 import { LEADERS } from '../shared/leaders';
@@ -30,6 +31,7 @@ class Main extends Component {
     render() {
         const _dishes = this.state.dishes;
         const _comments = this.state.comments;
+        const _leaders = this.state.leaders;
 
         function DishWithId(props) {
             const location = useLocation();
@@ -60,6 +62,7 @@ class Main extends Component {
                     <Route path='/menu/:dishId'
                         element={<DishWithId dishes={_dishes} comments={_comments} />}
                     />
+                    <Route exact path='/aboutus' element={<About leaders={_leaders} />} />
 
                     <Route path="/" element={<Navigate to="/home" replace />} />
                     {/* <Route path='/home' component={HomePage} />

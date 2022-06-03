@@ -31,3 +31,17 @@ address{
 .navbar-dark {
     background-color: #512DA8;
 }
+
+/* AboutComponent */
+
+.media-list {
+    list-style: none;
+}
+
+.center {
+    text-align: center;
+}
+
+.blockquote-footer-m {
+    margin-top: unset;
+}
