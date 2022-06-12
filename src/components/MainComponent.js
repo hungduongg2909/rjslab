@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, withRouter } from 'react-router-dom';
 /* import { Switch, Route, Redirect } from 'react-router-dom';
         Switch & Redirect has been removed from React router v6, and replaced Routes and Navigate*/
+import { connect } from 'react-redux';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import Menu from './MenuComponent';
@@ -15,23 +16,27 @@ import { LEADERS } from '../shared/leaders';
 import { DISHES } from '../shared/dishes';
 import { useLocation } from 'react-router-dom'
 
+const mapStateToProps = state => {
+    return {
+      dishes: state.dishes,
+      comments: state.comments,
+      promotions: state.promotions,
+      leaders: state.leaders
+    }
+  }
 class Main extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            dishes: DISHES,
-            comments: COMMENTS,
-            promotions: PROMOTIONS,
-            leaders: LEADERS
-        };
+        
     }
+
 
     
     render() {
-        const _dishes = this.state.dishes;
-        const _comments = this.state.comments;
-        const _leaders = this.state.leaders;
+        const _dishes = this.props.dishes;
+        const _comments = this.props.comments;
+        const _leaders = this.props.leaders;
 
         function DishWithId(props) {
             const location = useLocation();
@@ -52,9 +57,9 @@ class Main extends Component {
                 <Routes>
                     <Route path='/home'
                         element={<Home
-                            dish={this.state.dishes.filter((dish) => dish.featured)[0]}
-                            promotion={this.state.promotions.filter((promo) => promo.featured)[0]}
-                            leader={this.state.leaders.filter((leader) => leader.featured)[0]}
+                            dish={this.props.dishes.filter((dish) => dish.featured)[0]}
+                            promotion={this.props.promotions.filter((promo) => promo.featured)[0]}
+                            leader={this.props.leaders.filter((leader) => leader.featured)[0]}
                         />}
                      />
                     <Route exact path='/menu' element={<Menu dishes={_dishes} />} />
@@ -75,4 +80,4 @@ class Main extends Component {
     }
 }
 
-export default Main;
+export default connect(mapStateToProps)(Main);
