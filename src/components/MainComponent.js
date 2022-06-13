@@ -45,12 +45,12 @@ class Main extends Component {
           }
 
           const DishWithId = ({match}) => {
-            console.log(this.props.dishes)
             return(
               
-              <DishDetail dish={this.props.dishes.filter((dish) => dish._id === match.params.dishId)[0]}
+              <DishDetail
+                dish={this.props.dishes.filter((dish) => dish.id === Number(match.params.dishId))}
                 
-                comments={this.props.comments.filter((comment) => comment.dish === match.params.dishId)}
+                comments={this.props.comments.filter((comment) => comment.id === Number(match.params.dishId))}
                 
             
                 />

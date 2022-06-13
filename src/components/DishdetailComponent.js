@@ -4,15 +4,15 @@ import { Card, CardImg, CardText, CardBody,
 import { Link } from 'react-router-dom';
 
 function RenderDish({dish}) {
-    let _dish = dish[0]
+    dish = dish[0];
     return(
         <div className="col-12 col-md-5 m-1">
             <Card>
-                <CardImg top src={_dish.image} alt={_dish.name} />
+                <CardImg top src={dish.image} alt={dish.name} />
                 
                 <CardBody>
-                    <CardTitle>{_dish.name}</CardTitle>
-                    <CardText>{_dish.description}</CardText>
+                    <CardTitle>{dish.name}</CardTitle>
+                    <CardText>{dish.description}</CardText>
                 </CardBody>
             </Card>
         </div>
