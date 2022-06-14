@@ -84,7 +84,7 @@ class Contact extends Component {
                                         validators={{
                                             required, minLength: minLength(3), maxLength: maxLength(15)
                                         }}
-                                         />
+                                    />
                                     <Errors
                                         className="text-danger"
                                         model=".firstname"
