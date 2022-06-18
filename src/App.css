@@ -45,3 +45,7 @@ address{
 .blockquote-footer-m {
     margin-top: unset;
 }
+
+.custom_btnLogin {
+    justify-content: space-between;
+}

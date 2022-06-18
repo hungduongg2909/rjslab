@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
-import { Card, CardImg, CardText, CardBody,
-    CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Card, CardImg, CardImgOverlay, CardText, CardBody,
+    CardTitle, Breadcrumb, BreadcrumbItem, Label,
+    Modal, ModalHeader, ModalBody, Button, Row, Col } from 'reactstrap';
+import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 
+const minLength = (len) => (val) => val && (val.length >= len);
+const maxLength = (len) => (val) => !(val) || (val.length <= len);
+
 function RenderDish({dish}) {
-    let _dish = dish[0]
+    dish = dish[0];
     return(
         <div className="col-12 col-md-5 m-1">
             <Card>
-                <CardImg top src={_dish.image} alt={_dish.name} />
-                
+                <CardImg top src={dish.image} alt={dish.name} />
+
                 <CardBody>
-                    <CardTitle>{_dish.name}</CardTitle>
-                    <CardText>{_dish.description}</CardText>
+                    <CardTitle>{dish.name}</CardTitle>
+                    <CardText>{dish.description}</CardText>
                 </CardBody>
             </Card>
         </div>
@@ -35,12 +40,100 @@ function RenderComments({comments}) {
                         );
                     })}
                 </ul>
+
+                <CommentForm />
             </div>
         );
     else
         return(
             <div></div>
         );
+}
+
+class CommentForm extends Component {
+    constructor(props) {
+        super(props);
+
+        this.toggleModal = this.toggleModal.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+
+        this.state = {
+            isNavOpen: false,
+            isModalOpen: false
+        };
+    }
+
+    toggleModal() {
+        this.setState({
+            isModalOpen: !this.state.isModalOpen
+        });
+    }
+
+    handleSubmit(values) {
+        console.log('Current State is: ' + JSON.stringify(values));
+        alert('Current State is: ' + JSON.stringify(values));
+        // event.preventDefault();
+    }
+
+    render() {
+        return(
+        <div>
+            <Button outline onClick={this.toggleModal}><span className="fa fa-pencil fa-lg"></span> Submit Comment</Button>
+            <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+            <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
+
+            <ModalBody>
+                <LocalForm onSubmit={this.handleSubmit}>
+                    <Row className="form-group">
+                        <Col>
+                        <Label htmlFor="rating">Rating</Label>
+                        <Control.select model=".rating" id="rating" className="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </Control.select>
+                        </Col>
+                    </Row>
+
+                    <Row className="form-group">
+                        <Col md={12}>
+                            <Label htmlFor="name">Your name</Label>
+                            <Control.text
+                                model=".name" id="name"
+                                className="form-control"
+                                placeholder="Your name"
+                                validators={{minLength: minLength(2), maxLength: maxLength(15)}}
+                            />
+                            <Errors
+                                className="text-danger"
+                                model=".name"
+                                show="touched"
+                                messages={{
+                                    minLength: 'Must be greater than 2 characters',
+                                    maxLength: 'Must be 15 characters or less'
+                                }}
+                            />
+                        </Col>
+                    </Row>
+
+                    <Row className="form-group">
+                        <Col>
+                        <Label htmlFor="comment">Comment</Label>
+                        <Control.textarea model=".comment" id="comment"
+                                    rows="6" className="form-control" />
+                        </Col>
+                    </Row>
+                    <Button type="submit" className="bg-primary">
+                        Submit
+                    </Button>
+                </LocalForm>
+            </ModalBody>
+           </Modal>
+        </div>
+        );
+    }
 }
 
 
