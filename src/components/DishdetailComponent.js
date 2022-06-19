@@ -138,6 +138,7 @@ class CommentForm extends Component {
 
 
 const DishDetail = (props) => {
+    console.log(props)
     if (props.isLoading) {
         return(
             <div className="container">
